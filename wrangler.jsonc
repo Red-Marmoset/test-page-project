@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "test-page-project",
+  "account_id": "bab833826312fe2b0c81bd7608a6dbf7",
+  "compatibility_date": "2026-10-05",
+  "workers_dev": true,
+  "assets": { "directory": "./dist" },
+  "routes": [
+    { "pattern": "test-page.redmarmosetstudios.com", "custom_domain": true }
+  ],
+  "observability": {
+    "enabled": true,
+    "traces": { "enabled": true }
+  }
+}

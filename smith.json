@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "id": "test-page-project",
+    "name": "Test page",
+    "description": "A small npm website for testing Smith builds and Cloudflare deployments."
+  },
+  "repos": [
+    {
+      "name": "main",
+      "primary": true,
+      "url": "git@github.com:Red-Marmoset/test-page-project.git",
+      "defaultBranch": "main",
+      "checkoutDir": "."
+    }
+  ],
+  "buildProducts": [
+    {
+      "name": "build",
+      "rules": [
+        {
+          "name": "build-site",
+          "branches": ["*"],
+          "nodeSelector": { "os": "windows", "labels": ["node"] },
+          "command": { "windows": { "interpreter": "ps1", "script": "deploy/build.ps1" } },
+          "timeoutSeconds": 600,
+          "artifacts": { "globs": ["dist/**"], "package": "zip" }
+        }
+      ]
+    },
+    {
+      "name": "deploy",
+      "rules": [
+        {
+          "name": "deploy-site",
+          "branches": ["main"],
+          "nodeSelector": { "os": "windows", "labels": ["node", "wrangler"] },
+          "command": { "windows": { "interpreter": "ps1", "script": "deploy/build.ps1", "args": ["-Deploy"] } },
+          "timeoutSeconds": 900,
+          "artifacts": { "globs": ["dist/**"], "package": "zip" }
+        }
+      ]
+    }
+  ],
+  "triggers": [
+    { "type": "manual" },
+    { "type": "poll", "branches": ["main"], "intervalSeconds": 120, "product": "deploy" }
+  ]
+}
