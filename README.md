@@ -50,8 +50,8 @@ The same entry point can be used outside Smith:
 ./deploy/build.ps1 -Deploy
 ```
 
-GitHub Actions validates pull requests and pushes to `main` with a build and
-Wrangler dry run. Production deployment is handled by Smith or `npm run deploy`.
+Builds and production deployment are handled by Smith or the npm commands
+above. This project does not use GitHub Actions.
 
 ## License
 
